@@ -18,6 +18,10 @@ root.render(
           <Route index element={<Posts />} />
           <Route path="article/" element={<Posts />} />
           <Route path="article/:id/" element={<DetailPosts />} />
+          <Route path="users/" element={<Posts />} />
+          <Route path="comments/" element={<Posts />} />
+          <Route path="comments/:id" element={<DetailPosts />} />
+          <Route path="users/:id/" element={<DetailPosts />} />
         </Route>
       </Routes>
     </BrowserRouter>

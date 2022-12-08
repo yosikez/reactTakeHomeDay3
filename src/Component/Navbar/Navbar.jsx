@@ -32,6 +32,18 @@ const NavBar = () => {
       >
         Post
       </NavLink>
+      <NavLink
+        to="/users"
+        style={({ isActive }) => (isActive ? Active : NonActive)}
+      >
+        Users
+      </NavLink>
+      <NavLink
+        to="/comments"
+        style={({ isActive }) => (isActive ? Active : NonActive)}
+      >
+        Comments
+      </NavLink>
     </nav>
   );
 };

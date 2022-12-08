@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import "./Posts.style.css";
 import axios from "axios";
 
-const Posts = () => {
-  const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+const Posts = ({ route, path }) => {
+  const baseUrl = "https://jsonplaceholder.typicode.com";
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
 
-  const getData = async () => {
+  const getData = async (route) => {
     try {
-      const res = await axios.get(baseUrl);
+      const res = await axios.get(`${baseUrl}/${route}`);
 
       if (res.status) {
         setData(res.data);
@@ -23,29 +23,45 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(route);
+  }, [path]);
+
+  const clickHandler = (id) => {
+    navigate(`/${path}/${id}`, { state: route });
+  };
 
   const Post = ({ data }) => {
-    return (
-      <div className="posts-data">
+    if (path == "article" ) {
+      return (
         <p
           onClick={() => {
-            navigate(`/article/${data.id}`);
+            clickHandler(data.id);
           }}
         >
           {data.title}
         </p>
-      </div>
-    );
+      );
+    } else if (path == "users" || path == "comments") {
+      return (
+        <p
+          onClick={() => {
+            clickHandler(data.id);
+          }}
+        >
+          {data.name}
+        </p>
+      );
+    }
   };
 
   return (
     <div className="posts">
-      <h1>POST</h1>
-      {data.map((data, key) => (
-        <Post key={key} data={data} />
-      ))}
+      <h1>{path}</h1>
+      <div className="posts-data">
+        {data.map((data, key) => (
+          <Post key={key} data={data} />
+        ))}
+      </div>
     </div>
   );
 };
